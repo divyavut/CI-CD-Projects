@@ -1,0 +1,32 @@
+name: Java CI with Maven
+
+# Trigger workflow on push to main branch or pull request to main branch
+on:
+  push:
+    branches:
+      - main  # You can also use 'master' if that's your branch name
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest  
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17' 
+    - name: Build with Maven
+      run: mvn clean package -f CI/CD/my-java-app/pom.xml
+      
+    - name: Run tests
+      run: mvn test -f CI/CD/my-java-app/pom.xml
+      
+    - name: Upload artifact (JAR file)
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-java-app-jar
+        path: CI/CD/my-java-app/target/*.jar
