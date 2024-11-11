@@ -27,7 +27,7 @@ jobs:
       run: mvn test -f my-java-app/pom.xml
       
     - name: Upload artifact (JAR file)
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: my-java-app-jar
         path: my-java-app/target/*.jar
