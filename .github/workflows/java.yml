@@ -20,13 +20,13 @@ jobs:
       with:
         java-version: '17' 
     - name: Build with Maven
-      run: mvn clean package -f CI/CD/my-java-app/pom.xml
+      run: mvn clean package -f my-java-app/pom.xml
       
     - name: Run tests
-      run: mvn test -f CI/CD/my-java-app/pom.xml
+      run: mvn test -f my-java-app/pom.xml
       
     - name: Upload artifact (JAR file)
       uses: actions/upload-artifact@v3
       with:
         name: my-java-app-jar
-        path: CI/CD/my-java-app/target/*.jar
+        path: my-java-app/target/*.jar
