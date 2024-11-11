@@ -41,7 +41,8 @@ jobs:
        # Save the private key as a file
         echo "$EC2_KEY" > ec2_key.pem
         chmod 600 ec2_key.pem
-        
+        # Create the .ssh directory if it doesn't exist
+         mkdir -p ~/.ssh
         # Add the EC2 host key to known_hosts
         ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
         
