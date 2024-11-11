@@ -38,12 +38,15 @@ jobs:
         EC2_USER: ${{ secrets.EC2_USER }}      # The EC2 SSH username (e.g., ec2-user for Amazon Linux)
         EC2_KEY: ${{ secrets.EC2_PRIVATE_KEY }} # The private key to SSH into the EC2 instance
       run: |
-        # Save the private key as a file
+       # Save the private key as a file
         echo "$EC2_KEY" > ec2_key.pem
         chmod 600 ec2_key.pem
-
+        
+        # Add the EC2 host key to known_hosts
+        ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+        
         # Use SCP to copy the JAR file to the EC2 instance
         scp -i ec2_key.pem target/my-java-app-1.0-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/
-
+        
         # SSH into EC2 to run the JAR file
         ssh -i ec2_key.pem $EC2_USER@$EC2_HOST "java -jar /home/$EC2_USER/my-java-app-1.0-SNAPSHOT.jar"
