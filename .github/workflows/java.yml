@@ -41,7 +41,7 @@ jobs:
           ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
 
           # Use SCP to copy the JAR file to the EC2 instance
-          scp -i ec2_key.pem target/my-java-app-1.0-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/
+          scp -i ec2_key.pem my-java-app/target/my-java-app-1.0-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/
 
           # SSH into EC2 to run the JAR file
           ssh -i ec2_key.pem $EC2_USER@$EC2_HOST "java -jar /home/$EC2_USER/my-java-app-1.0-SNAPSHOT.jar"
