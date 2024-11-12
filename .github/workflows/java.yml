@@ -23,7 +23,11 @@ jobs:
           cd my-java-app
           mvn clean package
           ls target  # Check if the JAR file exists
-
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-java-app-jar
+          path: target/my-java-app-1.0-SNAPSHOT.jar  # Path to the JAR file
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -33,7 +37,11 @@ jobs:
           # Save the private key as a file
           echo "$EC2_KEY" > ec2_key.pem
           chmod 400 ec2_key.pem
+          # Create the .ssh directory if it doesn't exist
+          mkdir -p ~/.ssh
 
+          # Add the EC2 host key to known_hosts
+          ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
           # Use SCP to copy the JAR file to the EC2 instance
           scp -i ec2_key.pem my-java-app/target/my-java-app-1.0-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/
 
