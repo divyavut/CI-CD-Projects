@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: my-java-app-jar
-          path: target/my-java-app-1.0-SNAPSHOT.jar  # Path to the JAR file
+          path: my-java-app/target/my-java-app-1.0-SNAPSHOT.jar  # Path to the JAR file
           
       - name: Deploy to EC2
         env:
