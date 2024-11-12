@@ -23,11 +23,13 @@ jobs:
           cd my-java-app
           mvn clean package
           ls target  # Check if the JAR file exists
+          
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v3
         with:
           name: my-java-app-jar
           path: target/my-java-app-1.0-SNAPSHOT.jar  # Path to the JAR file
+          
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
